@@ -29,22 +29,28 @@ function Login({ showWelcomeHandler }) {
                 localStorage.setItem('logintoken', data.token);
                 setEmail('');
                 setPassword('');
-                showWelcomeHandler(); 
+                showWelcomeHandler();  // Trigger state update for welcome page
             } else {
                 setError(data.message || 'Invalid email or password');
             }
-            console.log(data.vendorid);
+
+            // Fetch vendor details after successful login
             const vendorid = data.vendorid;
             const vendorresponse = await fetch(`${APIpath}/vendor/getvendorbyid/${vendorid}`);
             const vendordata = await vendorresponse.json();
-            console.log(vendordata);
-            if(vendorresponse.ok){
-                const firmid = vendordata.vendorfirmid;
-                console.log(firmid);
-                localStorage.setItem('firmid',firmid);
 
+            console.log(vendordata);
+            if(vendorresponse.ok) {
+                const firmid = vendordata.vendorfirmid;
+                const vendorfirmname = vendordata.vendor.firm[0].firmname;
+                console.log(firmid);
+                localStorage.setItem('firmid', firmid);
+                localStorage.setItem('firmname', vendorfirmname);
+
+                // No need to reload the page, handle updates via state or navigation
+                showWelcomeHandler();  // Update the page view accordingly
             }
-    } catch (err) {
+        } catch (err) {
             console.error('Login failed', err);
             setError('An error occurred. Please try again.');
         } finally {

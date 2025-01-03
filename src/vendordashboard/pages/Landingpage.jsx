@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import Login from '../components/forms/Login'
@@ -16,6 +16,9 @@ function Landingpage() {
   const[showAddProducts,setshowAddProducts] = useState(false);
   const[showwelcome,setshowwelcome] = useState(false);
   const[showallproducts,setshowallproducts] = useState(false);
+  const[showlogout,setshowlogout] = useState(false);
+  const[showaddfirmtitle,setshowaddfirmtitlr] = useState(false);
+
 
   const showLoginHandler = ()=>{
     setshowlogin(true);
@@ -65,21 +68,33 @@ function Landingpage() {
     setshowregister(false);
     setshowAddFirm(false);
   }
-  const welcomename = ()=>{
-    return 
+  const showLogoutHandler = ()=>{
+    localStorage.removeItem('logintoken');
+    localStorage.removeItem('firmid');
+    localStorage.removeItem('firmname');
+    setshowlogout(false);
   }
+
+   useEffect(()=>{
+    const logintoken = localStorage.getItem('logintoken');
+    if(logintoken){
+      setshowlogout(true);
+    }
+   })
   return (
     <>
       <section className='landing_page'>
-      <Navbar showLoginHandler = {showLoginHandler} showRegisterHandler = {showRegisterHandler} />
+      <Navbar showLoginHandler = {showLoginHandler} showRegisterHandler = {showRegisterHandler} showLogout={showlogout} showLogoutHandler ={showLogoutHandler}/>
       <section className='collections'>
       <Sidebar showFirmHandler ={showFirmHandler} showProductsHandler = {showProductsHandler} showallproductsHandler = {showallproductsHandler} showLoginHandler = {showLoginHandler}/>
       {showlogin && <Login showWelcomeHandler = {showWelcomeHandler}/> }
       {showregister && <Register showLoginHandler = {showLoginHandler}/>}
-      { showAddFirm && <Addfirm  showProductsHandler = {showProductsHandler}/> }
-      { showAddProducts && <AddProduct/>}
+
+      { showAddFirm && showlogout &&  <Addfirm  showProductsHandler = {showProductsHandler}/> }
+      
+      { showAddProducts && showlogout && <AddProduct/>}
       {showwelcome && <Welcome/> }
-      {showallproducts && <Allproducts/>}
+      {showallproducts && showlogout && <Allproducts/>}
       
       </section>
       </section>
