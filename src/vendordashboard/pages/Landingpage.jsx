@@ -5,7 +5,7 @@ import Login from '../components/forms/Login'
 import Register from '../components/forms/Register'
 import Addfirm from '../components/forms/Addfirm'
 import AddProduct from '../components/forms/AddProduct'
-import Welcome from '../components/welcome'
+import Welcome from '../components/Welcome'
 import Allproducts from '../components/Allproducts'
 
 function Landingpage() {
