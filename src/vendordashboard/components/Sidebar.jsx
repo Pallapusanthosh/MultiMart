@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Sidebar({ showFirmHandler, showProductsHandler, showallproductsHandler, showLoginHandler }) {
+export default function Sidebar({ showFirmHandler, showProductsHandler, showallproductsHandler, showLoginHandler  , showUserDetails  , showFirmsHandler}) {
    
   const frimname = localStorage.getItem('firmname');
 
@@ -11,9 +11,10 @@ export default function Sidebar({ showFirmHandler, showProductsHandler, showallp
         {
           !frimname ?  <li onClick={showFirmHandler}>Add firm</li> : <></>
         }
-        <li onClick={showProductsHandler}>Add Products</li>
+        {/* <li onClick={showProductsHandler}>Add Products</li> */}
         <li onClick={showallproductsHandler}>All products</li>
-        <li>User details</li>
+        <li onClick={showUserDetails}>User details </li>
+        <li onClick={showFirmsHandler}>My Firms</li>
        
       </ul>
     </div>
