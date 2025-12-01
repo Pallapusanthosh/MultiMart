@@ -7,6 +7,7 @@ function Register({ showLoginHandler }) {
     const [password, setpassword] = useState('');
     const [error, seterror] = useState('');
     const [loading, setloading] = useState(false);
+    const [phonenumber , setphonenumber] = useState('');
     const api = APIpath;
 
     const handlesubmit = async (e) => {
@@ -20,7 +21,7 @@ function Register({ showLoginHandler }) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, email, password }),
+                body: JSON.stringify({ username, email, password ,phonenumber}),
             });
 
             const data = await response.json();
@@ -31,6 +32,7 @@ function Register({ showLoginHandler }) {
                 setusername('');
                 setemail('');
                 setpassword('');
+                setphonenumber('');
                 showLoginHandler();
             } else {
                 seterror(data.message || 'Registration failed');
@@ -83,6 +85,17 @@ function Register({ showLoginHandler }) {
         value={password} 
         onChange={(e)=>setpassword(e.target.value)}
         placeholder="Enter your password"
+        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+      />
+    </div>
+    <div>
+      <label className="block text-gray-600 mb-1">Password</label>
+      <input 
+        type="number" 
+        name="phonenumber" 
+        value={phonenumber} 
+        onChange={(e)=>setphonenumber(e.target.value)}
+        placeholder="Enter your phone number"
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
     </div>

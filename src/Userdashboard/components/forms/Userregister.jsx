@@ -5,6 +5,7 @@ function Userregister({ showlogin }) {
   const [username, setusername] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [phonenumber, setphonenumber] = useState("");
   const [loading,setloading] = useState(false);
 
   const handlesubmit = async (e) => {
@@ -16,7 +17,7 @@ function Userregister({ showlogin }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ username, email, password ,phonenumber }),
       });
 
       if (response.ok) {
@@ -24,6 +25,7 @@ function Userregister({ showlogin }) {
         setusername("");
         setemail("");
         setpassword("");
+        setphonenumber("");
         showlogin();
         setloading(false);
       } else {
@@ -75,8 +77,20 @@ function Userregister({ showlogin }) {
             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
         </div>
+        <div>
+          <label className="block text-gray-700 text-sm mb-1">Phone</label>
+          <input
+            type="number"
+            name="phonenumber"
+            placeholder="Enter your phone number"
+            value={phonenumber}
+            onChange={(e) => setphonenumber(e.target.value)}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          />
+        </div>
         <button
           type="submit"
+          disabled={loading}
           className="w-full py-2 rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold shadow-md hover:from-purple-600 hover:to-indigo-600 transition"
         >
           {loading ? "Submitting" : "Submit"}
